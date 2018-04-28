@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0">
+		<title>Vue Learning Notes</title>
+		<link rel="stylesheet" href="./css/VueLearningNotes.css">
+	</head>
+	<body>
+		<div id="标题模块">
+			{{ 标题内容 }}
+		</div>
+		<hr>
+
+		<div class="获奖列表模块">
+			<h4 v-if="显示0">2018年度优秀训练师</h4>
+			<span v-if="显示1">以下是获奖名单：</span>
+			<ol>
+				<ul v-for="获奖人 in 获奖名单">{{获奖人.name}} ({{获奖人.age}}岁)</ul>
+			</ol>
+		</div>
+		<hr>
+
+		<div id="myFor">
+			<h4>游戏列表循环</h4>
+			<div v-for="(val, key) in games">
+				{{key}}: {{val}}
+			</div>
+		</div>
+		<hr>
+
+		<div id="myInput">
+			<p>您喜欢的游戏是：{{ game }}</p>
+			<input type="text" v-model.lazy="game">
+		</div>
+		<hr>
+
+		<div id="myCheckbox">
+			<p>您喜欢的游戏是：{{ game }}</p>
+			<input type="checkbox" id="怪物猎人" value="怪物猎人" v-model="game">
+			<label for="怪物猎人">怪物猎人</label>
+			<input type="checkbox" id="精灵宝可梦" value="精灵宝可梦" v-model="game">
+			<label for="精灵宝可梦">精灵宝可梦</label>
+			<input type="checkbox" id="超级马里奥" value="超级马里奥" v-model="game">
+			<label for="超级马里奥">超级马里奥</label>
+			<input type="checkbox" id="都不喜欢" value="都不喜欢" v-model="game">
+			<label for="都不喜欢">都不喜欢</label>
+		</div>
+		<hr>
+
+		<div id="myRadio">
+			<p>您喜欢的游戏是：{{ likeGame }}</p>
+			<input type="radio" id="讨鬼传" value="讨鬼传" v-model="likeGame">
+			<label for="讨鬼传">讨鬼传</label>
+			<input type="radio" id="自由战争" value="自由战争" v-model="likeGame">
+			<label for="自由战争">自由战争</label>
+			<br>
+			<p>您讨厌的游戏是：{{ dislikeGame }}</p>
+			<input type="radio" id="噬神者" value="噬神者" v-model="dislikeGame">
+			<label for="噬神者">噬神者</label>
+			<input type="radio" id="灵魂献祭" value="灵魂献祭" v-model="dislikeGame">
+			<label for="灵魂献祭">灵魂献祭</label>
+		</div>
+		<hr>
+
+		<div id="mySelect">
+			<p>您喜欢的武器是：{{ likeWeapon }}</p>
+			<select v-model="likeWeapon">
+				<option disabled value="">请选择...</option>
+				<option>太刀</option>
+				<option>大剑</option>
+				<option>长枪</option>
+				<option>大锤</option>
+				<option>狩猎笛</option>
+			</select>
+			<br><br>
+			<p>您喜欢的武器是(多选)：{{ likeWeapons }}</p>
+			<select multiple v-model="likeWeapons">
+				<option>太刀</option>
+				<option>大剑</option>
+				<option>长枪</option>
+				<option>大锤</option>
+				<option>狩猎笛</option>
+			</select>
+		</div>
+		<hr>
+
+		<div id="myButton">
+			<p>您选择的游戏是：{{ game }}</p>
+			<button v-on:dblclick="clickGame('都不喜欢')">都不喜欢</button>
+			<button v-on:click="clickGame('怪物猎人')">怪物猎人</button>
+			<button v-on:mousedown="clickGame('精灵宝可梦')">精灵宝可梦</button>
+			<button v-on:mouseup="clickGame('超级马里奥')">超级马里奥</button>
+		</div>
+		<hr>
+
+		<div id="myFilters">
+			<p>原文：{{ message }}</p>
+			<p>大写：{{ message | doUpper }}</p>
+			<p>原值：{{ num }}</p>
+			<p>百分比：{{ num | doPercentage }}</p>
+		</div>
+		<hr>
+
+		<div id="myComputed">
+			<p>日本任天堂官方公布的 Nintendo Switch 售价为 {{ price }} 日元， 税后 {{ priceInTax }} 日元</p>
+			<button v-on:click = "clickAdd(100)">税前加价100日元</button>
+		</div>
+		<hr>
+
+		<div id="mySetter">
+			<p>日本任天堂官方公布的 Nintendo Switch 售价为 {{ price }} 日元， 税后 {{ priceInTax }} 日元</p>
+			<button v-on:click = "clickChange(10000)">税后改价10000日元</button>
+		</div>
+		<hr>
+
+		<div id="myWatch">
+			<p>日本任天堂官方公布的 Nintendo Switch 售价为
+				<input type="number" v-model.number="price">日元，
+			</p>
+			<span>税后 {{ priceInTax }} 日元。</span>
+			<button v-on:click = "clickAdd(100)">税前加价100日元</button>
+			<p>（已将input的数据锁定为number类型，否则在使用加价按钮函数时会变为字符串+数字的情况）</p>
+		</div>
+		<hr>
+
+		<div id="myClass">
+			<span v-bind:class="classObject0">警告</span>
+			<span v-bind:class="classObject1">警告</span>
+			<br>
+			<span v-bind:class="classObject1">警告</span>
+			<span v-bind:class="classObject0">警告</span>
+			<br>
+			<button v-on:click = "clickAct()">点击事件</button>
+		</div>
+		<hr>
+
+		<div id="myIf">
+			<p v-if ="result == null">成绩未公布</p>
+			<p v-else-if ="result == 0">{{result}}分 零分</p>
+			<p v-else-if ="result < 60">{{result}}分 (不及格)</p>
+			<p v-else-if ="result < 100">{{result}}分 (继续努力)</p>
+			<p v-else-if ="result == 100">{{result}}分 (满分)</p>
+			<p v-else>数据出错</p>
+			<button v-on:click = "clickResult()">随机成绩</button>
+		</div>
+		<hr>
+
+		<div id="myComponent">
+			<h4>游戏列表组件</h4>
+			<ol>
+				<game-item v-for="game in games" v-bind:item="game"></game-item>
+			</ol>
+		</div>
+		<hr>
+
+		<div id="myTable">
+			<h4>组件表格</h4>
+			<table border="1">
+				<tr>
+					<td>编号</td>
+					<td>名称</td>
+				</tr>
+				<tr is="my-row1"></tr>
+				<!-- <my-row1></my-row1> -->
+			</table>
+		</div>
+		<hr>
+
+		<div id="myVal">
+			<h4>组件数据函数</h4>
+			<span>今天的天气</span>
+			<weather></weather>
+		</div>
+		<hr>
+
+		<div id="myProps">
+			<h4>组件数据传递</h4>
+			<span>今天的天气情况</span>
+			<get-weather v-bind:val=0></get-weather>
+			<get-weather v-bind:val=1></get-weather>
+			<get-weather v-bind:val=0></get-weather>
+		</div>
+		<hr>
+
+		<div id="myPropsData">
+			<h4>组件变量传递</h4>
+			<input v-model="val">
+			<br>
+			<say-hello v-bind:name="val"></say-hello>
+		</div>
+		<hr>
+
+		<div id="myValidation">
+			<h4>组件参数验证</h4>
+			<say-hello name="Mike" v-bind:age="howAge" v-bind:address="whereAddress"></say-hello>
+		</div>
+		<hr>
+
+		<div id="myEmit">
+			<h4>组件冒泡传递</h4>
+			<add-emit v-bind:a="1" v-bind:b="2" v-on:add_event="getAddRes"></add-emit>
+			<p>{{ result }}</p>
+		</div>
+		<hr>
+
+		<div id="mySlot">
+			<h4>组件冒泡传递</h4>
+			<say-to pname="小明">技术太差，</say-to>
+			<say-to pname="小李">千万不要学他，</say-to>
+			<say-to pname="小王">你教教他们吧。</say-to>
+			<say-to pname="老师">
+				<span slot="a">惩罚她</span>
+				<span slot="b">奖励她</span>
+			</say-to>
+		</div>
+		<hr>
+
+
+		<script src="https://unpkg.com/vue"></script>
+		<script src="./js/VueLearningNotes.js" charset="utf-8"></script>
+	</body>
+</html>
